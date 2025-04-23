@@ -11,7 +11,7 @@ public class MemberController extends Controller {
 
     private Scanner sc;
     private List<Member> memberList;
-    private int lastMemebrId = 0;
+    private int lastMemberId = 3;
 
     public MemberController(Scanner sc) {
         this.sc = sc;
@@ -24,10 +24,19 @@ public class MemberController extends Controller {
             case "join":
                 doJoin();
                 break;
+            case "list":
+                showMember();
+                break;
             default:
                 System.out.println("명령어를 확인해주세요.4");
         }
 
+    }
+
+    public void showMember(){
+        for (Member member : memberList){
+            System.out.println(member.toString());
+        }
     }
 
     public void doJoin() {
@@ -64,12 +73,12 @@ public class MemberController extends Controller {
 
         String regDate = Util.getNowDate();
 
-        lastMemebrId++;
-        Member addMember = new Member(lastMemebrId, regDate, "", loginId, loginPw, name);
+        lastMemberId++;
+        Member addMember = new Member(lastMemberId, regDate, "", loginId, loginPw, name);
 
         memberList.add(addMember);
 
-        System.out.printf("%d번 회원이 등록되었습니다. %s님 환영합니다.\n", lastMemebrId, name);
+        System.out.printf("%d번 회원이 등록되었습니다. %s님 환영합니다.\n", lastMemberId, name);
 
     }
 
@@ -80,5 +89,14 @@ public class MemberController extends Controller {
             }
         }
         return true;
+    }
+
+    public void makeTestData() {
+        System.out.println("테스트를 위한 회원 데이터를 생성합니다.");
+        memberList.add( new Member(1, "2025-3-1", Util.getNowDate(), "admin", "admin", "관리자"));
+        memberList.add( new Member(2, "2025-3-2", Util.getNowDate(), "test1", "test1", "회원1"));
+        memberList.add( new Member(3, "2025-3-3", Util.getNowDate(), "test2", "test2", "회원2"));
+
+
     }
 }
